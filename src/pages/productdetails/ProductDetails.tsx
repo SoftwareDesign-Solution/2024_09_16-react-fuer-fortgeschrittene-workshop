@@ -12,7 +12,7 @@ const ProductDetails = () => {
 
     return (
         <div>
-            <h1>Product Details {id}</h1>
+            <h1>Product Details {product.id}</h1>
             <p>{product.name}</p>
             <p>{product.description}</p>
             <p>{product.price}</p>
