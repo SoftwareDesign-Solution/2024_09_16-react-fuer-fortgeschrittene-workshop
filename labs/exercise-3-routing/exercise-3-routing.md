@@ -1,8 +1,10 @@
 - [3. Routing](#3-routing)
   - [3.1 Routen definieren](#31-routen-definieren)
-  - [3.2 Artikel filtern mit URL-Suchparameter](#32-artikel-filtern-mit-url-suchparameter)
-  - [3.3 Produktdetails laden](#33-produktdetails-laden)
-  - [3.4 Geschützte Route mit useAuth](#34-geschützte-route-mit-useauth)
+  - [3.2 Erweitern Sie die `NavBar.tsx` um die Routen](#32-erweitern-sie-die-navbartsx-um-die-routen)
+  - [3.3 Artikel filtern mit URL-Suchparameter](#33-artikel-filtern-mit-url-suchparameter)
+  - [3.4 Produktdetails laden](#34-produktdetails-laden)
+  - [3.5 Geschützte Route mit useAuth](#35-geschützte-route-mit-useauth)
+  - [3.6 404 Route](#36-404-route)
 
 The solution branch for the whole lab is `solution-3-routing`
 
@@ -103,7 +105,68 @@ root.render(
 </p>
 </details>
 
-## 3.2 Artikel filtern mit URL-Suchparameter
+## 3.2 Erweitern Sie die `NavBar.tsx` um die Routen
+
+Nutzen Sie bei Products, Playground & Admin die Komponente `Link`. Bei den Buttons Register & Login arbeiten Sie mit dem useNavigate-Hook.
+
+<details>
+<summary>Show Solution</summary>
+<p>
+
+**/src/components/navbar/NavBar.tsx**
+
+```typescript
+import { Link, useNavigate } from "react-router-dom";
+
+const NavBar = () => {
+
+    const navigate = useNavigate();
+
+    return (
+        <nav className="flex justify-between p-4 border-b-2 border-gray-300">
+			<div className="flex gap-2 justify-start mt-2">
+
+				{/* Aufgabe: Home-Icon soll "http://localhost:3000/" aufrufen */}
+				<Link to={'/'}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+						<path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+					</svg>
+				</Link>
+				
+				<div className="flex space-x-8 ml-10">
+
+                    {/* Aufgabe: Products soll "http://localhost:3000/products" aufrufen */}
+					<Link to={'/products'}>Products</Link>
+
+                    {/* Add the following divs */}
+					<Link to={'/playground'}>Playground</Link>
+
+                    {/* Add the following divs */}
+					<Link to={'/admin'}>Admin</Link>
+					
+				</div>
+			</div>
+			<div className="flex gap-2 justify-center">
+				
+                {/* ... */}
+
+                {/* Aufgabe: Register-Button soll "http://localhost:3000/register" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
+                <button type="button" onClick={e => navigate('/register')} className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+
+                {/* Aufgabe: Login-Button soll "http://localhost:3000/login" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
+				<button type="button" onClick={e => navigate('/login')} className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
+
+			</div>
+		</nav>
+    )
+
+};
+```
+
+</p>
+</details>
+
+## 3.3 Artikel filtern mit URL-Suchparameter
 
 Über der Produktliste werden die einzelnen Kategorien als Badges angezeigt. Nutzen Sie den useSearchParams Hook um die Produkte nach der angeklickten Kategorie zu filtern. Wenn der Badge "Alle" angeklickt wird, soll der URL-Suchparameter entfernt werden.
 
@@ -134,7 +197,7 @@ const Products = () => {
 </p>
 </details>
 
-## 3.3 Produktdetails laden
+## 3.4 Produktdetails laden
 
 Beim Klicken auf ein Artikel sollen rechts daneben die Produktdetails angezeigt werden. Die Produktdetails sollen von <http://localhost:3001/products/1> abgerufen werden, bevor die Komponente gerendert wird. Nutzen Sie hierzu die `loader`-Funktion von React Router.
 
@@ -147,9 +210,9 @@ Beim Klicken auf ein Artikel sollen rechts daneben die Produktdetails angezeigt 
 ```typescript
 import { LoaderFunctionArgs } from "react-router-dom";
 import axios from "axios";
-import { Product } from "../models/Product";
+import { Product } from "../entities/Product";
 
-const productLoader = async ({ params }: LoaderFunctionArgs) => {
+const ProductLoader = async ({ params }: LoaderFunctionArgs) => {
     
     const { productId } = params;
 
@@ -161,9 +224,9 @@ const productLoader = async ({ params }: LoaderFunctionArgs) => {
 
 };
 
-export { productLoader };
+export { ProductLoader };
 
-export type ProductLoaderResponse = Awaited<ReturnType<typeof productLoader>>;
+export type ProductLoaderResponse = Awaited<ReturnType<typeof ProductLoader>>;
 ```
 
 **/src/routes/index.tsx**
@@ -262,7 +325,7 @@ const ProductDetails = () => {
 
     return (
         <div>
-            <h1>Product Details {id}</h1>
+            <h1>Product Details {product.id}</h1>
             <p>{product.name}</p>
             <p>{product.description}</p>
             <p>{product.price}</p>
@@ -276,7 +339,7 @@ export { ProductDetails };
 </p>
 </details>
 
-## 3.4 Geschützte Route mit useAuth
+## 3.5 Geschützte Route mit useAuth
 
 Die Route <http://localhost:3000/admin> soll nur zugänglich sein, wenn ein gültiger accessToken vorhanden ist. Verwende eine benutzerdefinierte ProtectedRoute-Komponente und den useAuth-Hook, um den Authentifizierungsstatus zu überprüfen. Wenn der Benutzer nicht authentifiziert ist, wird er zur Login-Seite umgeleitet.
 
@@ -288,7 +351,7 @@ Die Route <http://localhost:3000/admin> soll nur zugänglich sein, wenn ein gül
 
 ```typescript
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -331,6 +394,36 @@ const routes: RouteObject[] = [
     }
 ];
 
+```
+
+</p>
+</details>
+
+## 3.6 404 Route
+
+Erweitern Sie die in der Aufgabe 3.1 erstellte Routen-Konfiguration um eine 404 Route. Diese soll immer aufgerufen werden, wenn eine Seite nicht gefunden wurde.
+
+<details>
+<summary>Show Solution</summary>
+<p>
+
+**/src/routes/index.tsx**
+
+```typescript
+const routes: RouteObject[] = [
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            // ...
+            {
+                path: "*",
+                element: element: <div>404 Not Found</div>,
+            }
+            // ...
+        ]
+    }
+];
 ```
 
 </p>
