@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import axios from "axios";
 import { QuantitySelector } from "../../components/quantityselector/QuantitySelector";
 import { StyledBadge } from "../../components/styledbadge/StyledBadge";
 import { Product } from "../../entities/Product";
@@ -17,15 +18,12 @@ const Products = () => {
 
     useEffect(() => {
         
-        setProducts([
-            {
-                "id": 1,
-                "name": "Fritz Kola",
-                "description": "Willkommen im Wach",
-                "type": "Getränk",
-                "price": 2
-            }
-        ]);
+        const fetchProducts = async () => {
+            const response = await axios.get<Product[]>("http://localhost:3001/products");
+            setProducts(response.data);
+        };
+    
+        fetchProducts();
 
     }, []);
     
