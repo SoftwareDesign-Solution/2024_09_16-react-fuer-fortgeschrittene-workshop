@@ -1,6 +1,9 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 
 const NavBar = () => {
+
+	const navigate = useNavigate();
 
 	const { getItemCount } = useCart();
 
@@ -18,13 +21,13 @@ const NavBar = () => {
 				<div className="flex space-x-8 ml-10">
 
                     {/* Aufgabe: Products soll "http://localhost:3000/products" aufrufen */}
-					<a href="/" data-testid="navproducts">Products</a>
+					<Link to={'/products'} data-testid="navproducts">Products</Link>
 
                     {/* Aufgabe: Playground soll "http://localhost:3000"/playground" aufrufen */}
-					<a href="/">Playground</a>
+					<Link to={'/playground'}>Playground</Link>
 
                     {/* Aufgabe: Admin soll "http://localhost:3000/admin" nur aufrufen, wenn der Benutzer angemeldet ist */}
-					<a href="/">Admin</a>
+					<Link to={'/admin'}>Admin</Link>
 					
 				</div>
 			</div>
@@ -41,11 +44,11 @@ const NavBar = () => {
 				</select>
 
                 {/* Aufgabe: Register-Button soll "http://localhost:3000/register" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
-                <button type="button" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+                <button type="button" onClick={e => navigate('/register')} className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
 
                 {/* Aufgabe: Login-Button soll "http://localhost:3000/login" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
-				<button type="button" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
-
+				<button type="button" onClick={e => navigate('/login')} className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
+				
 			</div>
 		</nav>
     )

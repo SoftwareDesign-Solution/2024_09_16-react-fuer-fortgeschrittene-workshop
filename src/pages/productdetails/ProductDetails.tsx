@@ -1,14 +1,10 @@
+import { useLoaderData } from "react-router-dom";
+import { type ProductLoaderResponse } from "../../services/productloader/ProductLoader";
 import { Product } from "../../entities/Product";
 
 const ProductDetails = () => {
 
-    const product: Product = {
-        id: 1,
-        name: "Fritz Kola",
-        type: "Getränk",
-        description: "Willkommen im Wach",
-        price: 2
-    };
+    const product: Product = useLoaderData() as ProductLoaderResponse;
 
     return (
         <div>
