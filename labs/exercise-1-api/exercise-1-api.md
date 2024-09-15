@@ -46,7 +46,7 @@ Rufen Sie mit Hilfe von axios.post in der Methode `handleSubmit` die API <http:/
 <summary>Show Solution</summary>
 <p>
 
-**/src/components/**
+**/src/components/register/Register.tsx**
 
 ```typescript
 import axios from "axios";
@@ -76,7 +76,7 @@ Rufen Sie mit axios.get in der Products.tsx nach dem Laden alle Produkte von <ht
 <summary>Show Solution</summary>
 <p>
 
-**/src/components/**
+**/src/components/products/Products.tsx**
 
 ```typescript
 useEffect(() => {
