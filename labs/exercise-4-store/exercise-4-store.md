@@ -155,7 +155,7 @@ const cartReducer = (state = initialState, action: any) => {
 
 };
 
-export { initialState, cartReducer };
+export { cartReducer };
 ```
 
 </p>
