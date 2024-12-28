@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/authcontext/AuthContext";
 
 type FormData = {
@@ -10,27 +11,25 @@ type FormData = {
 
 const Register = () => {
 
-    const { register } = useAuth();
+    const { register: authRegister } = useAuth();
 
-    const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
-    });
+    const {
+        register,
+        reset,
+        handleSubmit,
+        formState: { errors },
+      } = useForm<FormData>();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+      const onSubmit = async (data: FormData) => {
         
-        await register(formData.firstName, formData.lastName, formData.email, formData.password);
-        
+        console.log(data);
+
+        //await axios.post("http://localhost:3001/register", data);
+
+        authRegister(data.firstName, data.lastName, data.email, data.password);
+
+        reset();
+
     };
 
     return (
@@ -43,7 +42,7 @@ const Register = () => {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
-                    <form className="space-y-6" method="POST" onSubmit={e => handleSubmit(e)}>
+                    <form className="space-y-6" method="POST" onSubmit={handleSubmit(onSubmit)}>
                         
                         {/* Vorname */}
                         <div>
@@ -51,14 +50,13 @@ const Register = () => {
                             <div className="mt-2">
                                 <input 
                                     type="text" 
-                                    name="firstName" 
                                     id="firstName" 
-                                    value={formData.firstName} 
-                                    onChange={e => handleChange(e)} 
                                     placeholder="Max"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('firstName', { required: 'Vorname ist erforderlich' })}
                                 />
                             </div>
+                            {errors.firstName && (<div className="mt-2 text-red-600">{errors.firstName.message}</div>)}
                         </div>
 
                         {/* Nachname */}
@@ -67,14 +65,14 @@ const Register = () => {
                             <div className="mt-2">
                                 <input 
                                     type="text" 
-                                    name="lastName" 
-                                    id="lastName" 
-                                    value={formData.lastName} 
-                                    onChange={e => handleChange(e)} 
+                                    id="lastName"
                                     placeholder="Mustermann"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('lastName', { required: 'Nachname ist erforderlich' })}
+                                    
                                 />
                             </div>
+                            {errors.lastName && (<div className="mt-2 text-red-600">{errors.lastName.message}</div>)}
                         </div>
 
                         {/* E-Mail */}
@@ -83,14 +81,13 @@ const Register = () => {
                             <div className="mt-2">
                                 <input 
                                     type="text" 
-                                    name="email" 
                                     id="email" 
-                                    value={formData.email} 
-                                    onChange={e => handleChange(e)} 
                                     placeholder="you@example.com"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('email', { required: 'E-Mail ist erforderlich', pattern: { value: /^\S+@\S+$/i, message: 'Ungültige E-Mail-Adresse' } })}
                                 />
                             </div>
+                            {errors.email && (<div className="mt-2 text-red-600">{errors.email.message}</div>)}
                         </div>
                         
                         {/* Password */}
@@ -98,15 +95,14 @@ const Register = () => {
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                             <div className="mt-2">
                                 <input 
-                                    type="password" 
-                                    name="password" 
+                                    type="password"  
                                     id="password" 
-                                    value={formData.password} 
-                                    onChange={e => handleChange(e)} 
                                     placeholder=""
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('password', { required: 'Passwort ist erforderlich', minLength: { value: 8, message: 'Mindestens 8 Zeichen' } })}
                                 />
                             </div>
+                            {errors.password && (<div className="mt-2 text-red-600">{errors.password.message}</div>)}
                         </div>
 
                         {/* Submit */}

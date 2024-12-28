@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/authcontext/AuthContext";
 
 type FormData = {
@@ -8,8 +9,36 @@ type FormData = {
 
 const Login = () => {
 
+    const {
+        register,
+        reset,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormData>();
+
     const { login, accessToken } = useAuth();
 
+    const onSubmit = async (data: FormData) => {
+
+        console.log(data);
+
+        /*
+        const response = await axios.post("http://localhost:3001/login", data);
+
+        const { accessToken } = response.data;
+        localStorage.setItem("accessToken", accessToken);
+        */
+
+        await login(data.email, data.password);
+
+        if (accessToken)
+            localStorage.setItem("accessToken", accessToken);
+
+        reset();
+
+    };
+
+    /*
     const [formData, setFormData] = useState<FormData>({
         email: "",
         password: ""
@@ -31,6 +60,7 @@ const Login = () => {
             localStorage.setItem("accessToken", accessToken);
 
     };
+    */
 
     return (
         <>
@@ -42,7 +72,7 @@ const Login = () => {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
-                    <form className="space-y-6" onSubmit={e => handleSubmit(e)}>
+                    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                         
                         {/* E-Mail */}
                         <div>
@@ -50,14 +80,13 @@ const Login = () => {
                             <div className="mt-2">
                                 <input 
                                     type="text" 
-                                    name="email" 
                                     id="email" 
-                                    value={formData.email} 
-                                    onChange={e => handleChange(e)} 
                                     placeholder="you@example.com"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('email', { required: 'E-Mail ist erforderlich', pattern: { value: /^\S+@\S+$/i, message: 'Ungültige E-Mail-Adresse' } })}
                                 />
                             </div>
+                            {errors.email && (<div className="mt-2 text-red-600">{errors.email.message}</div>)}
                         </div>
                         
                         {/* Password */}
@@ -66,14 +95,12 @@ const Login = () => {
                             <div className="mt-2">
                                 <input 
                                     type="password" 
-                                    name="password" 
-                                    id="password" 
-                                    value={formData.password} 
-                                    onChange={e => handleChange(e)} 
-                                    placeholder="you@example.com"
+                                    id="password"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:text-gray-900 sm:text-sm sm:leading-6"
+                                    {...register('password', { required: 'Passwort ist erforderlich', minLength: { value: 8, message: 'Mindestens 8 Zeichen' } })}
                                 />
                             </div>
+                            {errors.password && (<div className="mt-2 text-red-600">{errors.password.message}</div>)}
                         </div>
 
                         {/* Submit */}
