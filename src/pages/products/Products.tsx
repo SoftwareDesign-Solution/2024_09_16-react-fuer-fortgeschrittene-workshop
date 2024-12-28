@@ -4,36 +4,31 @@ import axios from "axios";
 import { QuantitySelector } from "../../components/quantityselector/QuantitySelector";
 import { StyledBadge } from "../../components/styledbadge/StyledBadge";
 import { Product } from "../../models/Product";
+import { fetchProducts } from "../../store/product/product.actions";
+import { getError, getLoading, getProducts } from "../../store/product/product.selectors";
+import { type RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const Products = () => {
 
-    const [products, setProducts] = useState<Product[]>([]);
+    const dispatch = useDispatch();
+
+    const error = useSelector((state: RootState) => getError(state.product));
+    const loading = useSelector((state: RootState) => getLoading(state.product));
+    const products = useSelector((state: RootState) => getProducts(state.product));
 
     const [searchParams, setSearchParams] = useSearchParams();
 
     const selectedType = searchParams.get('type');
-    const loading = false;
-    const error = null;
-
+    
     const filteredProducts = useMemo(() => {
         return selectedType ? products.filter((p: Product) => p.type === selectedType) : products;
       }, [products, selectedType]);
 
-    useEffect(() => {
-        
-        const fetchProducts = async () => {
-            const response = await axios.get<Product[]>("http://localhost:3001/products");
-            setProducts(response.data);
-        };
-    
-        fetchProducts();
-
-    }, []);
-    
-    useEffect(() => {
-        
-    }, []);
+      useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
     const handleTypeClick = (type?: string) => {
         setSearchParams(type ? { type } : {}); // Leere Parameter setzen, um den Filter zu entfernen
