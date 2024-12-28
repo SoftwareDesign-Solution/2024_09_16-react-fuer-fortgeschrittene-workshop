@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../store/cart/cart.actions";
-import { getCartItemByProduct } from "../../store/cart/cart.selectors";
-import { type RootState } from "../../store";
+import { addToCart, removeFromCart, getItem } from "../../features/cart/cartSlice";
 import { Product } from "../../models/Product";
+import { RootState } from "../../store";
 
 const QuantitySelector = ({ product }: { product: Product}) => {
     
     const dispatch = useDispatch();
-    const cartItem = useSelector((state: RootState) => getCartItemByProduct(state.cart, product));
+    const cartItem = useSelector((state: RootState) => getItem(state, product));
 
     if (!cartItem)
         return <button onClick={() => dispatch(addToCart(product))} className="addtocart rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>

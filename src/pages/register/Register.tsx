@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../contexts/authcontext/AuthContext";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../features/auth/authActions";
 
 type FormData = {
     firstName: string;
@@ -11,7 +12,7 @@ type FormData = {
 
 const Register = () => {
 
-    const { register: authRegister } = useAuth();
+    const dispatch = useDispatch();
 
     const {
         register,
@@ -26,7 +27,7 @@ const Register = () => {
 
         //await axios.post("http://localhost:3001/register", data);
 
-        authRegister(data.firstName, data.lastName, data.email, data.password);
+        await dispatch(registerUser({ ...data }));
 
         reset();
 

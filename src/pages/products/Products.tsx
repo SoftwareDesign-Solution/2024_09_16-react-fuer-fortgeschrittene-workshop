@@ -4,9 +4,8 @@ import axios from "axios";
 import { QuantitySelector } from "../../components/quantityselector/QuantitySelector";
 import { StyledBadge } from "../../components/styledbadge/StyledBadge";
 import { Product } from "../../models/Product";
-import { fetchProducts } from "../../store/product/product.actions";
-import { getError, getLoading, getProducts } from "../../store/product/product.selectors";
-import { type RootState } from "../../store";
+import { fetchProducts } from "../../features/product/productActions";
+import { getError, getLoading, getProducts } from "../../features/product/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -14,9 +13,9 @@ const Products = () => {
 
     const dispatch = useDispatch();
 
-    const error = useSelector((state: RootState) => getError(state.product));
-    const loading = useSelector((state: RootState) => getLoading(state.product));
-    const products = useSelector((state: RootState) => getProducts(state.product));
+    const error = useSelector(getError);
+    const loading = useSelector(getLoading);
+    const products = useSelector(getProducts);
 
     const [searchParams, setSearchParams] = useSearchParams();
 

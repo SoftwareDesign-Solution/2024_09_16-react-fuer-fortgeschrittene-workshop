@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../contexts/authcontext/AuthContext";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../features/auth/authActions";
 
 type FormData = {
     email: string;
@@ -9,14 +9,14 @@ type FormData = {
 
 const Login = () => {
 
+    const dispatch = useDispatch();
+
     const {
         register,
         reset,
         handleSubmit,
         formState: { errors },
     } = useForm<FormData>();
-
-    const { login, accessToken } = useAuth();
 
     const onSubmit = async (data: FormData) => {
 
@@ -29,10 +29,7 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         */
 
-        await login(data.email, data.password);
-
-        if (accessToken)
-            localStorage.setItem("accessToken", accessToken);
+        await dispatch(loginUser({ ...data }));
 
         reset();
 

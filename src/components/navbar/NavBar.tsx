@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getItemCount } from "../../store/cart/cart.selectors";
-import { type RootState } from "../../store";
+import { getItemCount } from "../../features/cart/cartSlice";
 
 const NavBar = () => {
 
 	const navigate = useNavigate();
 
-	const itemcount = useSelector((state: RootState) => getItemCount(state.cart));
+	const itemcount = useSelector(getItemCount);
 
     return (
         <nav className="flex justify-between p-4 border-b-2 border-gray-300">
