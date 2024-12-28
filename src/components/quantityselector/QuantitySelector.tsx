@@ -1,21 +1,23 @@
-import { useCart } from "../../contexts/cartcontext/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../store/cart/cart.actions";
+import { getCartItemByProduct } from "../../store/cart/cart.selectors";
+import { type RootState } from "../../store";
 import { Product } from "../../models/Product";
 
 const QuantitySelector = ({ product }: { product: Product}) => {
     
-    const { addToCart, removeFromCart, getItem } = useCart();
-
-    const cartItem = getItem(product);
+    const dispatch = useDispatch();
+    const cartItem = useSelector((state: RootState) => getCartItemByProduct(state.cart, product));
 
     if (!cartItem)
-        return <button onClick={() => addToCart(product)} className="addtocart rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>
+        return <button onClick={() => dispatch(addToCart(product))} className="addtocart rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add to Cart</button>
 
     return (
         <div className="flex gap-3">
 			<button 
                 type="button" 
                 className="decrease rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => removeFromCart(product)}
+                onClick={() => dispatch(removeFromCart(product))}
             >
                 -
             </button>
@@ -27,7 +29,7 @@ const QuantitySelector = ({ product }: { product: Product}) => {
 			<button 
                 type="button" 
                 className="increase rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => addToCart(product)}
+                onClick={() => dispatch(addToCart(product))}
             >
                 +
             </button>

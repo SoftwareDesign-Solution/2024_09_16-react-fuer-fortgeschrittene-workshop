@@ -93,6 +93,7 @@ export { type CartState, initialState };
 ```typescript
 import { CartItem } from "../../models/CartItem";
 import { ADD_TO_CART, REMOVE_FROM_CART } from "./cart.actions";
+import { initialState } from "./cart.state";
 
 
 const cartReducer = (state = initialState, action: any) => {

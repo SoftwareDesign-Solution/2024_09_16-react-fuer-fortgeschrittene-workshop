@@ -1,19 +1,26 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
+
+// React Context
 import { AuthProvider } from './contexts/authcontext/AuthContext';
-import { CartProvider } from './contexts/cartcontext/CartContext';
+
+// React Routing
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { routes } from './routes';
-import './index.css'
+
+// React Redux
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <CartProvider>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </CartProvider>
+      </Provider>
     </AuthProvider>
   </StrictMode>,
 )
