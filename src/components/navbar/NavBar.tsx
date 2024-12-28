@@ -1,6 +1,9 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../contexts/cartcontext/CartContext";
 
 const NavBar = () => {
+
+	const navigate = useNavigate();
 
 	const { getItemCount } = useCart();
 
@@ -9,22 +12,22 @@ const NavBar = () => {
 			<div className="flex gap-2 justify-start mt-2">
 
 				{/* Aufgabe: Home-Icon soll "http://localhost:3000/" aufrufen */}
-				<a href="/" id="nav-home">
+				<Link to={'/'} id="nav-home">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
 						<path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
 					</svg>
-				</a>
+				</Link>
 				
 				<div className="flex space-x-8 ml-10">
 
                     {/* Aufgabe: Products soll "http://localhost:3000/products" aufrufen */}
-					<a href="/" id="nav-products">Products</a>
+					<Link to={'/products'} id="nav-products">Products</Link>
 
                     {/* Aufgabe: Playground soll "http://localhost:3000"/playground" aufrufen */}
-					<a href="/" id="nav-playground">Playground</a>
+					<Link to={'/playground'} id="nav-playground">Playground</Link>
 
                     {/* Aufgabe: Admin soll "http://localhost:3000/admin" nur aufrufen, wenn der Benutzer angemeldet ist */}
-					<a href="/" id="nav-admin">Admin</a>
+					<Link to={'/admin'} id="nav-admin">Admin</Link>
 					
 				</div>
 			</div>
@@ -41,10 +44,10 @@ const NavBar = () => {
 				</select>
 
                 {/* Aufgabe: Register-Button soll "http://localhost:3000/register" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
-                <button type="button" id="nav-register" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+                <button type="button" onClick={() => navigate('/register')} id="nav-register" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
 
                 {/* Aufgabe: Login-Button soll "http://localhost:3000/login" aufrufen. Verwenden Sie hierzu den useNavigate-Hook */}
-				<button type="button" id="nav-login" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
+				<button type="button"onClick={() => navigate('/login')} id="nav-login" className="rounded-md bg-indigo-600 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
 
 			</div>
 		</nav>

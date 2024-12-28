@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link, Outlet, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import { QuantitySelector } from "../../components/quantityselector/QuantitySelector";
 import { StyledBadge } from "../../components/styledbadge/StyledBadge";
@@ -9,7 +10,9 @@ const Products = () => {
 
     const [products, setProducts] = useState<Product[]>([]);
 
-    const selectedType = "";
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const selectedType = searchParams.get('type');
     const loading = false;
     const error = null;
 
@@ -33,7 +36,7 @@ const Products = () => {
     }, []);
 
     const handleTypeClick = (type?: string) => {
-        console.log(type);   
+        setSearchParams(type ? { type } : {}); // Leere Parameter setzen, um den Filter zu entfernen
     };
 
     return (
@@ -76,7 +79,9 @@ const Products = () => {
                                         {(filteredProducts.length > 0) && filteredProducts.map((product: Product) => (
                                         <tr key={product.id}>
                                             <td className="product-name whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                            <Link to={`${product.id}`}>
                                                 {product.name}
+                                            </Link>
                                             </td>
                                             <td className="product-price whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.price} EUR</td>
                                             <td className="cart-quantity relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
@@ -91,7 +96,7 @@ const Products = () => {
                     </div>)}
                 </div>
                 <div>
-                    {/* */}
+                    <Outlet />
                 </div>
             </div>
         </>

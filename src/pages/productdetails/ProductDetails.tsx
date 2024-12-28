@@ -1,13 +1,10 @@
+import { useLoaderData, useParams } from "react-router-dom";
+import { type ProductLoaderResponse } from "../../services/productloader/ProductLoader";
+
 const ProductDetails = () => {
 
-    const productId = 0;
-
-    const product = {
-        id: 1,
-        name: 'Test',
-        description: 'Test',
-        price: 2.5
-    };
+    const { productId } = useParams();
+    const product = useLoaderData() as ProductLoaderResponse;
 
     return (
         <div>

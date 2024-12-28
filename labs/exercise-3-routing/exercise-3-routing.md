@@ -214,7 +214,7 @@ Beim Klicken auf ein Artikel sollen rechts daneben die Produktdetails angezeigt 
 ```typescript
 import { LoaderFunctionArgs } from "react-router-dom";
 import axios from "axios";
-import { Product } from "../models/Product";
+import { Product } from "../../models/Product";
 
 const ProductLoader = async ({ params }: LoaderFunctionArgs) => {
     
