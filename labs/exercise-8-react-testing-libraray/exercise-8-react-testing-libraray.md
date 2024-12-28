@@ -145,7 +145,7 @@ describe('Register', () => {
 
         await userEvent.click(submit);
 
-        expect(mockedConsoleLog).toHaveBeenCalledTimes(2);
+        expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
 
         expect(mockedPost).toHaveBeenCalledOnce();
 

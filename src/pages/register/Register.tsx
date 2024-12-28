@@ -47,7 +47,7 @@ const Register = () => {
                         
                         {/* Vorname */}
                         <div>
-                            <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">Vorname</label>
+                            <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">Vorname</label>
                             <div className="mt-2">
                                 <input 
                                     type="text" 
@@ -62,7 +62,7 @@ const Register = () => {
 
                         {/* Nachname */}
                         <div>
-                            <label htmlFor="lastname" className="block text-sm font-medium leading-6 text-gray-900">Nachname</label>
+                            <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">Nachname</label>
                             <div className="mt-2">
                                 <input 
                                     type="text" 
