@@ -1,0 +1,125 @@
+{
+  "users": [],
+  "products": [
+    {
+      "id": 1,
+      "name": "Fritz Kola",
+      "description": "Willkommen im Wach",
+      "type": "Getränk",
+      "imagePath": "/uploads/item/FritzKola.png",
+      "price": 2
+    },
+    {
+      "id": 2,
+      "name": "Apfel",
+      "type": "Obst",
+      "description": "Keeps the Doctor away",
+      "imagePath": "/uploads/item/Apfel.png",
+      "price": 0.5
+    },
+    {
+      "id": 3,
+      "name": "Banane",
+      "type": "Obst",
+      "description": "Warum ist sie krumm?",
+      "imagePath": "/uploads/item/Banane.png",
+      "price": 0.5
+    },
+    {
+      "id": 4,
+      "name": "Bayreuther Hell",
+      "type": "Getränk",
+      "description": "ehrlich, frisch und würzig",
+      "imagePath": "/uploads/item/Bayreuther.png",
+      "price": 1.5
+    },
+    {
+      "id": 5,
+      "name": "Dr. Pepper",
+      "type": "Getränk",
+      "description": "This is the taste",
+      "imagePath": "/uploads/item/DrPepper.png",
+      "price": 1.5
+    },
+    {
+      "id": 6,
+      "name": "Eistee",
+      "type": "Getränk",
+      "description": "Pfirsich > Zitrone",
+      "imagePath": "/uploads/item/Eistee.png",
+      "price": 1
+    },
+    {
+      "id": 7,
+      "name": "Kaffee",
+      "type": "Getränk",
+      "description": "Treibstoff für Programmierer",
+      "imagePath": "/uploads/item/Kaffee.png",
+      "price": 0.2
+    },
+    {
+      "id": 8,
+      "name": "Orangen Limo",
+      "type": "Getränk",
+      "description": "Bad Brambacher - Von der Natur zum Menschen",
+      "imagePath": "/uploads/item/Limo.png",
+      "price": 1
+    },
+    {
+      "id": 9,
+      "name": "Spezi",
+      "type": "Getränk",
+      "description": "Bad Brambacher - Von der Natur zum Menschen",
+      "imagePath": "/uploads/item/Spezi.png",
+      "price": 1
+    },
+    {
+      "id": 10,
+      "name": "Apfel Schorle",
+      "type": "Getränk",
+      "description": "Bad Brambacher - Von der Natur zum Menschen",
+      "imagePath": "/uploads/item/Schorle.png",
+      "price": 1
+    },
+    {
+      "id": 11,
+      "name": "Mineralwasser",
+      "type": "Getränk",
+      "description": "Bad Brambacher - Von der Natur zum Menschen",
+      "imagePath": "/uploads/item/Wasser.png",
+      "price": 0.5
+    },
+    {
+      "id": 12,
+      "name": "Red Bull",
+      "type": "Getränk",
+      "description": "verleiht Flügel",
+      "imagePath": "/uploads/item/RedBull.png",
+      "price": 2
+    },
+    {
+      "id": 13,
+      "name": "Schokoriegel",
+      "type": "Süßigkeit",
+      "description": "sei keine Diva",
+      "imagePath": "/uploads/item/Riegel.png",
+      "price": 0.5
+    },
+    {
+      "id": 15,
+      "name": "Magnum Eis",
+      "type": "Süßigkeit",
+      "description": "",
+      "imagePath": "/uploads/item/Magnum2.png",
+      "price": 1
+    },
+    {
+      "id": 16,
+      "name": "Capri / Nusshörnchen",
+      "type": "Süßigkeit",
+      "description": "",
+      "imagePath": "/uploads/item/Capri_Nuss.png",
+      "price": 0.7
+    }
+  ]
+}
