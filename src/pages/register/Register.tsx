@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import { useAuth } from "../../contexts/authcontext/AuthContext";
 
 type FormData = {
     firstName: string;
@@ -9,6 +9,8 @@ type FormData = {
 };
 
 const Register = () => {
+
+    const { register } = useAuth();
 
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
@@ -27,12 +29,7 @@ const Register = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-        // Aufgabe: Übermitteln Sie die Daten an den JSON-Server http://localhost:3001/login
-        const response = await axios.post("http://localhost:3001/register", formData);
-        console.log(response.data);
-
-        const { accessToken } = response.data;
-        localStorage.setItem("accessToken", accessToken);
+        await register(formData.firstName, formData.lastName, formData.email, formData.password);
         
     };
 
